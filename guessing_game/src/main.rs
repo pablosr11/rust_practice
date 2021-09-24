@@ -11,7 +11,9 @@ fn main() {
 
         let mut guess = String::new();
 
-        io::stdin().read_line(&mut guess).expect("Failed to read ln");
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read ln");
 
         // trim the newline added by pressing enter
         // parse returns a result enum, use it to match
@@ -22,9 +24,9 @@ fn main() {
 
         match guess.cmp(&random_number) {
             Ordering::Less => println!("TOO SMOL"),
-            Ordering::Greater => println!("TOO BANANA?"),
+            Ordering::Greater => println!("TOO B.I.G"),
             Ordering::Equal => {
-                println!("U WON");
+                println!("Well in lad");
                 break;
             }
         }
