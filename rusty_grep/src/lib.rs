@@ -23,3 +23,30 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     println!("{}", contents);
     Ok(())
 }
+
+fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results: Vec<&str> = vec![];
+    for line in contents.lines() {
+        if line.contains(&query) {
+            results.push(&line.trim())
+        }
+    }
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let q = "rust";
+        let c = "\
+        Honey is sweet and suit.
+        But it is not.
+        The crust -
+        ";
+
+        assert_eq!(vec!["The crust -"], search(q, c));
+    }
+}
