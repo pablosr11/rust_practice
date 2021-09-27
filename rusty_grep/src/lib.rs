@@ -36,12 +36,23 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     results
 }
 
+fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results: Vec<&str> = Vec::new();
+    let query = query.to_lowercase();
+    for line in contents.lines() {
+        if line.to_lowercase().contains(&query) {
+            results.push(&line.trim())
+        }
+    }
+    results
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn one_result() {
+    fn case_sensitive() {
         let q = "rust";
         let c = "\
         Honey is sweet and suit.
@@ -50,5 +61,17 @@ mod tests {
         ";
 
         assert_eq!(vec!["The crust -"], search(q, c));
+    }
+
+    #[test]
+    fn case_insensitive() {
+        let q = "CrUsT";
+        let c = "\
+        Honey is sweet and suit.
+        But it is not.
+        The crust -
+        ";
+
+        assert_eq!(vec!["The crust -"], search_case_insensitive(q, c))
     }
 }
