@@ -9,8 +9,6 @@ fn main() {
         process::exit(1);
     });
 
-    println!("Finding {} in {}", config.query, config.filename);
-
     if let Err(e) = rusty_grep::run(config) {
         println!("Application error: {}", e);
         process::exit(1)
