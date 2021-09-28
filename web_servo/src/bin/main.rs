@@ -37,11 +37,12 @@ fn handle_connection(mut stream: TcpStream) {
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:8080").unwrap();
-    let pool = ThreadPool::new(3);
+    let pool = ThreadPool::new(10);
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
         pool.execute(|| handle_connection(stream));
     }
+    println!("Shutting down")
 }
